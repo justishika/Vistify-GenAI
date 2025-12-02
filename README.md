@@ -1,34 +1,54 @@
-# YouTube Gist Generator 🎥✨
+# Vistify - AI Video Summarizer and Analyst🎥✨
 
-A modern, AI-powered web application that generates concise summaries of YouTube videos instantly. Built with a sleek Glassmorphism UI and powered by Google's Gemini Pro model.
+![Vistify Preview](./img/logo.svg)
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Instant Summaries**: Get key points from long videos in seconds.
-- **Modern UI**: Beautiful, responsive interface with glassmorphism effects and neon gradients.
-- **AI-Powered**: Utilizes Google's advanced Gemini 2.0 Flash model for accurate and coherent summaries.
-- **Privacy Focused**: Runs locally and processes transcripts securely.
+### 1. 📝 Dual-Mode Summarization
+*   **10-Point Summary**: Get the gist of any video in exactly 10 concise, numbered points. Perfect for quick consumption.
+*   **In-Depth Summary**: A comprehensive, structured report with IEEE-style headings, subheadings, and bullet points. Ideal for lectures and technical content.
+
+### 2. 💬 Interactive Q&A with RAG
+*   **Chat with Video**: Ask specific questions about the video content.
+*   **RAG Architecture**: Uses **TF-IDF** vectorization to retrieve the most relevant transcript chunks, ensuring answers are grounded in the video's actual content.
+*   **Hallucination Prevention**: Strict prompting ensures the AI answers *only* using the provided context.
+
+### 3. 📊 Trust & Evaluation Metrics
+Every Q&A response includes real-time metrics to help you trust the AI:
+*   **🔍 Retrieval Score**: How relevant the found context is to your question (Cosine Similarity).
+*   **✅ Faithfulness**: How well the answer matches the retrieved context (Word Overlap/ROUGE-1).
+*   **⏱️ Latency**: Time taken to generate the response.
+
+### 4. 🧠 Deep Insights & Entity Extraction
+*   **Named Entity Recognition (NER)**: Automatically identifies and categorizes People, Organizations, Locations, Dates, and more.
+*   **Key Insights**: Auto-generates "Key Insights" and "Suggested Questions" to help you explore the video further.
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **HTML5 & CSS3**: Custom responsive design with CSS variables and flexbox.
-- **JavaScript (ES6+)**: Modular architecture using MVC pattern.
-- **Parcel**: Blazing fast web application bundler.
+*   **Core**: HTML5, CSS3 (Custom Glassmorphism Design), JavaScript (ES6+).
+*   **Architecture**: MVC (Model-View-Controller) pattern for clean code separation.
+*   **Build Tool**: Parcel.
 
 ### Backend
-- **Python & Flask**: Lightweight REST API.
-- **Google Gemini API**: For generative AI summarization.
-- **YouTube Transcript API**: To extract video captions.
+*   **Framework**: Python Flask (REST API).
+*   **Server**: Waitress (Production-ready WSGI server).
+*   **AI Model**: Google **Gemini 2.0 Flash** (via `google-generativeai`).
+*   **RAG & NLP**: `scikit-learn` (TF-IDF, Cosine Similarity), `numpy`.
+*   **Data Source**: `youtube-transcript-api`.
+
+---
 
 ## ⚙️ Installation & Setup
 
-Follow these steps to run the project locally.
+Follow these steps to run Vistify locally.
 
 ### Prerequisites
-- **Node.js** (v14+ recommended)
-- **Python** (v3.8+ recommended)
-- A **Google Gemini API Key** (Get one [here](https://aistudio.google.com/app/apikey))
+*   **Node.js** (v14+ recommended)
+*   **Python** (v3.8+ recommended)
+*   A **Google Gemini API Key** (Get one [here](https://aistudio.google.com/app/apikey))
 
 ### 1. Clone the Repository
 ```bash
@@ -43,13 +63,13 @@ Navigate to the API directory and set up the Python environment.
 cd Flask-API
 
 # Create a virtual environment
-python -m venv venv
+python -m venv .venv
 
 # Activate the virtual environment
 # On Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 # On macOS/Linux:
-source venv/bin/activate
+source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -60,20 +80,13 @@ Open `Flask-API/config.py` and replace the placeholder with your actual Gemini A
 ```python
 GEMINI_API_KEY = 'YOUR_ACTUAL_API_KEY_HERE'
 ```
-download the below:
-```python
-   cd Flask-API
-   pip install spacy
-   python -m spacy download en_core_web_sm
-```
-
-*Note: Never commit your actual API key to GitHub!*
 
 **Run the Server:**
 ```bash
-python app.py
+# Starts the production server using Waitress
+python start_server.py
 ```
-The backend will start at `http://127.0.0.1:5000`.
+The backend will run on `http://0.0.0.0:5000`.
 
 ### 3. Frontend Setup
 Open a new terminal window, return to the project root, and install frontend dependencies.
@@ -90,11 +103,21 @@ npm start
 ```
 The application will open in your browser at `http://localhost:1234`.
 
-## 📖 Usage
-1. Copy a YouTube video URL (e.g., educational videos, tech talks, podcasts).
-2. Paste it into the search bar on the web app.
-3. Click **"Summarize in 10 Points"**.
-4. Wait a few seconds for the AI to generate your summary!
+---
+
+## 📖 Usage Guide
+
+1.  **Paste URL**: Copy a YouTube video URL and paste it into the search bar.
+2.  **Summarize**:
+    *   Click **"Summarize in 10 Points"** for a quick overview.
+    *   Click **"In-Depth Summary"** for a detailed report.
+3.  **Explore**:
+    *   Use **"Extract Entities & Facts"** to see structured data.
+    *   Click **"Ask Questions"** to open the chat interface.
+    *   Use **"Get Insights"** for suggested questions.
+4.  **Analyze**: Check the metrics bar at the bottom of every chat response to verify accuracy.
+
+---
 
 ## 📄 License
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
